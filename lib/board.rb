@@ -36,17 +36,25 @@ class Board
       puts "/ \\ |"
     end
   end
-  def take_input
-    puts "Enter the character"
-    @guess = gets.chomp
+  def update_dashes
+    @display_dashes = Array.new(@secret_word.length - 1,"_")
+    guess = find_index_of_guess_word
+    @display_dashes[guess] = @guess
+  end
+  def check_the_guess
     if @secret_word.include? @guess
-      
+      update_dashes
     else
       @incorrect_letters.push(@guess)
       @total_guesses += 1
     end
   end
-  def find_index
+  def take_input_update_display
+    puts "Enter the character"
+    @guess = gets.chomp.downcase
+    check_the_guess
+  end
+  def find_index_of_guess_word
     display_array = @secret_word.split('')
     display_array.pop
     index = display_array.find_index(@guess)
@@ -62,18 +70,13 @@ class Board
     render_gallows
     puts "Here are incorrect letters"
     p @incorrect_letters
-    @display_dashes = Array.new(@secret_word.length - 1,"_")
-    puts @display_dashes
+    puts "Here is our Word"
+    p @display_dashes
   end
 end
 
 game = Board.new
 game.load_random_secret_word
 puts game.secret_word
-game.take_input
+game.take_input_update_display
 game.render_views
-
-arr = ["a","b","c","d","e","f"]
-arr.each do |value|
-  print " #{value}"
-end
