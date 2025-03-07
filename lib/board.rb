@@ -1,16 +1,17 @@
 class Board
-  attr_reader :secret_word, :guesses
+  attr_reader :secret_word, :guesses, :display_hashes, :current_guess, :incorrect_letter, :display_words_array
   def initialize
     @secret_word = ''
     @total_guesses = 0
-    @display_dashes = []
-    @current_guess = ''
+    @display_dashes = Array.new(@secret_word.length,"_")
+    @guess = ''
     @incorrect_letters = []
+    @display_words_array = [nil]
   end
   def load_random_secret_word
-    file = File.open('words.txt')
-    @secret_word = file.readlines[rand(9894)]
-    file.close
+    while @secret_word.length != 7
+      @secret_word = File.readlines("words.txt").sample
+    end
   end
   def render_hangman
     if @total_guesses == 0
@@ -37,7 +38,6 @@ class Board
     end
   end
   def update_dashes
-    @display_dashes = Array.new(@secret_word.length - 1,"_")
     guess = find_index_of_guess_word
     @display_dashes[guess] = @guess
   end
@@ -55,9 +55,9 @@ class Board
     check_the_guess
   end
   def find_index_of_guess_word
-    display_array = @secret_word.split('')
-    display_array.pop
-    index = display_array.find_index(@guess)
+    @display_words_array = @secret_word.split('')
+    @display_words_array.pop
+    index = @display_words_array.find_index(@guess)
   end
   def render_gallows
     puts "____"
@@ -74,9 +74,3 @@ class Board
     p @display_dashes
   end
 end
-
-game = Board.new
-game.load_random_secret_word
-puts game.secret_word
-game.take_input_update_display
-game.render_views
