@@ -39,7 +39,11 @@ class Board
   end
   def update_dashes
     guess = find_index_of_guess_word
-    @display_dashes[guess] = @guess
+    if @display_dashes.include? @guess
+      
+    else
+      @display_dashes[guess] = @guess
+    end
   end
   def check_the_guess
     if @secret_word.include? @guess
