@@ -11,13 +11,10 @@ class Game < Board
   end
   def play_game
     load_random_secret_word
-    # p @secret_word
     loop do
       take_input_update_display
       render_views
       break if check_win_or_lose == true
-    end
-    
+    end 
   end
-  
 end
