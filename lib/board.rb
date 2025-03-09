@@ -13,6 +13,8 @@ class Board
       @secret_word = File.readlines("words.txt").sample
     end
     @display_dashes = Array.new(@secret_word.length - 1 , "_")
+    @display_words_array = @secret_word.split('')
+    @display_words_array.pop
   end
   def render_hangman
     if @total_guesses == 0
@@ -39,11 +41,11 @@ class Board
     end
   end
   def update_dashes
-    guess = find_index_of_guess_word
-    length = @secret_word.length - 1
-    a = length - guess
-    puts a
-    @display_dashes[guess] = @guess
+    @secret_word.chars.each_with_index do |char, index|
+      if char == @guess
+        @display_dashes[index] = @guess
+      end
+    end
   end
   def check_the_guess
     if @secret_word.include? @guess
@@ -57,11 +59,6 @@ class Board
     puts "Enter the character"
     @guess = gets.chomp.downcase
     check_the_guess
-  end
-  def find_index_of_guess_word
-    @display_words_array = @secret_word.split('')
-    @display_words_array.pop
-    index = @display_words_array.find_index(@guess)
   end
   def render_gallows
     puts "____"
