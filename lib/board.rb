@@ -3,7 +3,7 @@ class Board
   def initialize
     @secret_word = ''
     @total_guesses = 0
-    @display_dashes = Array.new(@secret_word.length,"_")
+    @display_dashes = []
     @guess = ''
     @incorrect_letters = []
     @display_words_array = [nil]
@@ -12,6 +12,7 @@ class Board
     while @secret_word.length != 7
       @secret_word = File.readlines("words.txt").sample
     end
+    @display_dashes = Array.new(@secret_word.length - 1 , "_")
   end
   def render_hangman
     if @total_guesses == 0
@@ -39,6 +40,9 @@ class Board
   end
   def update_dashes
     guess = find_index_of_guess_word
+    length = @secret_word.length - 1
+    a = length - guess
+    puts a
     @display_dashes[guess] = @guess
   end
   def check_the_guess

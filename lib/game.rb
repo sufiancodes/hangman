@@ -12,7 +12,3 @@ class Game < Board
   end
   
 end
-
-# now the only problem is double letters
-game = Game.new
-game.play_game
