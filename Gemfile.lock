@@ -46,6 +46,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  json (~> 2.10)
   pry-byebug (~> 3.10)
   rubocop (~> 1.73)
   rubocop-shopify (~> 2.16)
