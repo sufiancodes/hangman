@@ -1,4 +1,5 @@
-class Board
+require_relative 'player'
+class Board < Player
   attr_reader :secret_word, :guesses, :display_hashes, :current_guess, :incorrect_letter, :display_words_array
   def initialize
     @secret_word = ''

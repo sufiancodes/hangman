@@ -9,12 +9,15 @@ class Game < Board
       return true
     end
   end
-  def play_game
-    load_random_secret_word
+  def play_round
     loop do
       take_input_update_display
       render_views
       break if check_win_or_lose == true
-    end 
+    end
+  end
+  def play_game
+    load_random_secret_word
+    play_round
   end
 end
