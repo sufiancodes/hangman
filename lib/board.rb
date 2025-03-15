@@ -1,23 +1,26 @@
-require_relative 'player'
+# frozen_string_literal: true
+
+require_relative "player"
 class Board < Player
   attr_reader :secret_word, :total_guesses, :display_dashes, :guess, :incorrect_letter, :display_words_array
+
   def initialize
-    @secret_word = ''
+    @secret_word = ""
     @total_guesses = 0
     @display_dashes = []
     @incorrect_letters = []
     @display_words_array = [nil]
-    @guess = ''
+    @guess = ""
   end
+
   def load_random_secret_word
-    while @secret_word.length != 7
-      @secret_word = File.readlines("words.txt").sample
-    end
-    @display_dashes = Array.new(@secret_word.length - 1 , "_")
-    @display_words_array = @secret_word.split('')
+    @secret_word = File.readlines("words.txt").sample while @secret_word.length != 7
+    @display_dashes = Array.new(@secret_word.length - 1, "_")
+    @display_words_array = @secret_word.split("")
     @display_words_array.pop
     @secret_word.delete!("\n")
   end
+
   def render_hangman
     if @total_guesses == 0
       puts "``` |"
@@ -42,6 +45,7 @@ class Board < Player
       puts "/ \\ |"
     end
   end
+
   def update_dashes
     @secret_word.chars.each_with_index do |char, index|
       if char == @guess
@@ -49,31 +53,35 @@ class Board < Player
       end
     end
   end
+
   def check_the_guess
-    if @secret_word.include? @guess
+    if @secret_word.include?(@guess)
       update_dashes
     else
       @incorrect_letters.push(@guess)
       @total_guesses += 1
     end
   end
+
   def take_input_update_display
     puts "Enter the character"
     @guess = gets.chomp.downcase
     check_the_guess
   end
+
   def render_gallows
     puts "____"
     puts " |  |"
     render_hangman
-    3.times {puts "    |"}
+    3.times { puts "    |" }
     puts "   / \\"
   end
+
   def render_views
     render_gallows
     puts "Here are incorrect letters"
-    p @incorrect_letters
+    p(@incorrect_letters)
     puts "Here is our Word"
-    p @display_dashes
+    p(@display_dashes)
   end
 end
