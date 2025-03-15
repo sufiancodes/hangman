@@ -5,9 +5,9 @@ class Board < Player
     @secret_word = ''
     @total_guesses = 0
     @display_dashes = []
-    @guess = ''
     @incorrect_letters = []
     @display_words_array = [nil]
+    @guess = ''
   end
   def load_random_secret_word
     while @secret_word.length != 7
@@ -16,6 +16,7 @@ class Board < Player
     @display_dashes = Array.new(@secret_word.length - 1 , "_")
     @display_words_array = @secret_word.split('')
     @display_words_array.pop
+    @secret_word.delete!("\n")
   end
   def render_hangman
     if @total_guesses == 0
