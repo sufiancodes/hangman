@@ -18,7 +18,8 @@ class Game < Board
     end
   end
   def play_game
-    load_random_secret_word
+    welcome
+    load_saved_game_or_load_random_word
     play_round
   end
 end
