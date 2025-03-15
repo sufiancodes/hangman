@@ -13,6 +13,7 @@ class Game < Board
     loop do
       take_input_update_display
       render_views
+      save_the_game
       break if check_win_or_lose == true
     end
   end
